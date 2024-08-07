@@ -139,7 +139,7 @@
                                                             </div>
                                                         </form>
                                                         <hr>
-                                                        <form method="POST" action="{{ route('upload.image') }}" enctype="multipart/form-data">
+                                                        <form method="POST" action="{{ route('profile.upload') }}" enctype="multipart/form-data">
                                                             @csrf
                                                             <div class="input-group">
                                                                 <div class="form-file">

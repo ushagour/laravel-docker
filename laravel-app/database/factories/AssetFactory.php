@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 use App\Models\Asset;
+use Illuminate\Support\Str; // Import the Str class
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,7 +20,7 @@ class AssetFactory extends Factory
         
         'name' => $this->faker->word,
         'description' => $this->faker->word,
-        'danger_level'=> Str::random(10),
+        'danger_level'=> rand(1,4),
 
         ];
     }

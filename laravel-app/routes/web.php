@@ -25,6 +25,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('users', App\Http\Controllers\UserController::class);
     Route::get('/profile', [App\Http\Controllers\UserController::class, 'profile'])->name('profile');
+    Route::post('/profile/upload', [App\Http\Controllers\UserController::class, 'upload'])->name('profile.upload');
     Route::resource('asset', App\Http\Controllers\AssetController::class);
     Route::resource('stock', App\Http\Controllers\StockController::class);
     Route::resource('team', App\Http\Controllers\TeamController::class);
@@ -40,6 +41,9 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
             // Route::get('password', 'ChangePasswordController@edit')->name('password.edit');
             Route::post('password', [App\Http\Controllers\Auth\ChangePasswordController::class, 'update'])->name('password.update');
         }
+
+
+
     
     });
 
