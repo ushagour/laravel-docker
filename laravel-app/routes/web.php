@@ -15,7 +15,6 @@ use Illuminate\Http\Request;
 */
 
 
-
 Route::redirect('/', '/login');
 Auth::routes(['register' => false]);
 
@@ -23,6 +22,7 @@ Auth::routes(['register' => false]);
 Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/search', [App\Http\Controllers\HomeController::class, 'search'])->name('search');
     Route::resource('users', App\Http\Controllers\UserController::class);
     Route::get('/profile', [App\Http\Controllers\UserController::class, 'profile'])->name('profile');
     Route::post('/profile/upload', [App\Http\Controllers\UserController::class, 'upload'])->name('profile.upload');

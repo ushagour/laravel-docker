@@ -587,8 +587,16 @@
                         <ul class="navbar-nav header-right">
 							<li class="nav-item d-flex align-items-center">
 								<div class="input-group search-area">
-									<input type="text" class="form-control" placeholder="Search here...">
-									<span class="input-group-text"><a href="javascript:void(0)"><i class="flaticon-381-search-2"></i></a></span>
+
+
+
+	<form action="{{ route('search') }}" method="GET">
+            <input type="text" name="keyword" class="form-control" placeholder="Search products..." value="{{ request()->input('keyword') }}">
+
+        <button type="submit" class="btn btn-primary"><i class="flaticon-381-search-2"></i></button>
+    </form>
+
+
 								</div>
 							</li>
 					

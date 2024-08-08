@@ -36,4 +36,20 @@ class HomeController extends Controller
 
      return view('dashboard.index',compact('Total_Users','Total_Teams','Total_Asset','resultat'));
     }
+
+
+    public function search(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        
+        if ($keyword) {
+            $assets = Asset::where('name', 'LIKE', "%$keyword%")
+                ->orWhere('description', 'LIKE', "%$keyword%")
+                ->get();
+        } else {
+            $assets = Asset::all();
+        }
+
+        return view('dashboard.assets.index', compact('assets'));
+    }
 }
