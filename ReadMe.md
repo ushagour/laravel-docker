@@ -29,3 +29,53 @@ The web server used in this container is determined by the Dockerfile. Based on 
 ### Conclusion
 
 To determine the web server used by `laravel-docker`, you need to refer to the Dockerfile used to build this service. If it starts with `FROM php:8.1.0-apache`, then Apache is used. If you're using `nginx` and `php-fpm`, the Dockerfile should reflect that setup. The current `docker-compose.yml` file setup suggests that the Laravel application will run alongside MySQL and phpMyAdmin, all accessible through specified ports on your host machine.
+
+###  Nb 
+there is 2 more steps to do to remove the public/index.php from the URL 
+
+
+1. Use a Custom Dockerfile
+You need to modify Apache’s configuration, the best practice is to create a custom Docker image with your modifications.
+
+```
+FROM php:8.1.0-apache
+WORKDIR /var/www/html
+
+# Mod Rewrite
+RUN a2enmod rewrite
+
+# Copy your custom Apache configuration file
+COPY ./my-custom-apache-config.conf /etc/apache2/sites-available/000-default.conf
+
+# Linux Library
+RUN apt-get update -y && apt-get install -y \
+    libicu-dev \
+    libmariadb-dev \
+    unzip zip \
+    zlib1g-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libpng-dev 
+
+# Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+
+
+# Ensure permissions are correct
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html
+
+
+# PHP Extension
+RUN docker-php-ext-install gettext intl pdo_mysql gd
+
+RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd
+```
+
+
+Step 2: Move .htaccess to the Root Directory
+Move the .htaccess file from the public directory to the root of your Laravel project (the same directory where your composer.json file is located).

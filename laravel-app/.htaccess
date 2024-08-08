@@ -1,10 +1,9 @@
 <IfModule mod_rewrite.c>
-    # Disable MultiViews and Directory Indexing
-    <IfModule mod_negotiation.c>
-        Options -MultiViews -Indexes
-    </IfModule>
-
+    Options +FollowSymLinks
     RewriteEngine On
+
+    # Redirect to the public folder
+    RewriteCond %{REQUEST_URI} !^/public/
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
@@ -15,8 +14,8 @@
     RewriteCond %{REQUEST_URI} (.+)/$
     RewriteRule ^ %1 [L,R=301]
 
-    # Redirect Requests To Front Controller (index.php) Except For Existing Files and Directories
-    RewriteCond %{REQUEST_FILENAME} !-d
+    # Rewrite non-directory and non-file requests to public/index.php
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.php [L]
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ public/index.php [L]
 </IfModule>
