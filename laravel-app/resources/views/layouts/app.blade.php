@@ -586,18 +586,18 @@
                         </div>
                         <ul class="navbar-nav header-right">
 							<li class="nav-item d-flex align-items-center">
+								<form action="{{ route('search') }}" method="GET">
 								<div class="input-group search-area">
 
 
 
-	<form action="{{ route('search') }}" method="GET">
             <input type="text" name="keyword" class="form-control" placeholder="Search products..." value="{{ request()->input('keyword') }}">
 
         <button type="submit" class="btn btn-primary"><i class="flaticon-381-search-2"></i></button>
-    </form>
-
-
-								</div>
+		
+		
+	</div>
+</form>
 							</li>
 					
 							<li class="nav-item dropdown notification_dropdown">
